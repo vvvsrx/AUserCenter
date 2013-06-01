@@ -1,0 +1,74 @@
+﻿@{
+    Layout = "../razor-layout.cshtml";
+}
+@using Alipig.Framework.Web.Html
+@using Alipig.Framework.Util
+<div>
+    <ul class="breadcrumb">
+        <li>
+            <a href="#">首页</a> <span class="divider">/</span>
+        </li>
+        <li>
+            <a href="#">管理用户</a> <span class="divider">/</span>
+        </li>
+        <li>
+            <a href="#">添加用户</a>
+        </li>
+    </ul>
+</div>
+
+@if (ViewBag.Errored)
+{
+    @HtmlUtils.DisplayHtml(ViewBag.ErrorMsg)
+}
+
+<form method="post" action="" class="form-horizontal">
+    <fieldset>
+        <div class="control-group">
+            <label class="control-label" for="focusedInput">用户名:</label>
+            <div class="controls">
+                <input class="input-xlarge focused" name="UserName" id="UserName" type="text" value="@Model.UserName">
+            </div>
+        </div>
+
+        <div class="control-group">
+            <label class="control-label" for="focusedInput">密码:</label>
+            <div class="controls">
+                <input class="input-xlarge focused" name="Password" id="Password" type="password" value="">
+            </div>
+        </div>
+
+        <div class="control-group">
+            <label class="control-label" for="focusedInput">密码确认:</label>
+            <div class="controls">
+                <input class="input-xlarge focused" name="passwordConfirm" id="passwordConfirm" type="password" value="">
+            </div>
+        </div>
+
+        <div class="control-group">
+            <label class="control-label" for="focusedInput">E-Mail:</label>
+            <div class="controls">
+                <input class="input-xlarge focused" name="PrivateEmail" id="PrivateEmail" type="text" value="@Model.PrivateEmail">
+            </div>
+        </div>
+
+        <div class="control-group">
+            <label class="control-label" for="focusedInput">昵称:</label>
+            <div class="controls">
+                <input class="input-xlarge focused" name="Nickname" id="Nickname" type="text" value="@Model.Nickname">
+            </div>
+        </div>
+
+        <div class="control-group">
+            <label class="control-label" for="focusedInput">性别:</label>
+            <div class="controls">
+                @SelectHelpers.DropDownList("gender", HtmlUtils.GetUserGenderSelectList(Model.Gender))
+            </div>
+        </div>
+
+        <div class="form-actions">
+            <button type="submit" class="btn btn-primary">保存</button>
+            <button class="btn">返回列表</button>
+        </div>
+    </fieldset>
+</form>

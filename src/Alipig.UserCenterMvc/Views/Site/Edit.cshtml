@@ -1,0 +1,46 @@
+﻿@{
+    Layout = "../razor-layout.cshtml";
+}
+@using Alipig.Framework.Util
+<div>
+    <ul class="breadcrumb">
+        <li>
+            <a href="#">首页</a> <span class="divider">/</span>
+        </li>
+        <li>
+            <a href="#">管理网站</a> <span class="divider">/</span>
+        </li>
+        <li>
+            <a href="#">修改网站</a>
+        </li>
+    </ul>
+</div>
+
+@if (ViewBag.Errored)
+{
+    @HtmlUtils.DisplayHtml(ViewBag.ErrorMsg)
+}
+
+<form method="post" action="" class="form-horizontal">
+    <fieldset>
+        <input type="hidden" name="ID" id="ID" value="@Model.ID" />
+        <div class="control-group">
+            <label class="control-label" for="focusedInput">网站名称:</label>
+            <div class="controls">
+                <input class="input-xlarge focused" name="SiteName" id="SiteName" type="text" value="@Model.SiteName">
+            </div>
+        </div>
+
+        <div class="control-group">
+            <label class="control-label" for="focusedInput">网站描述:</label>
+            <div class="controls">
+                <textarea name="Description" id="Description" class="autogrow">@Model.Description</textarea>
+            </div>
+        </div>
+
+        <div class="form-actions">
+            <button type="submit" class="btn btn-primary">保存</button>
+            <a href="/site/list" class="btn">返回列表</a>
+        </div>
+    </fieldset>
+</form>

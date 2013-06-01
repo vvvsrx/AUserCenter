@@ -1,0 +1,55 @@
+﻿@{
+    Layout = "../razor-layout.cshtml";
+}
+@using Alipig.Framework.Web.Html
+@using Alipig.Framework.Util
+<div>
+    <ul class="breadcrumb">
+        <li>
+            <a href="#">首页</a> <span class="divider">/</span>
+        </li>
+        <li>
+            <a href="#">角色管理</a> <span class="divider">/</span>
+        </li>
+        <li>
+            <a href="#">修改角色</a>
+        </li>
+    </ul>
+</div>
+
+@if (ViewBag.Errored)
+{
+    @HtmlUtils.DisplayHtml(ViewBag.ErrorMsg)
+}
+
+<form method="post" action="" class="form-horizontal">
+    <fieldset>
+        <input type="hidden" name="ID" id="ID" value="@Model.ID" />
+        <div class="control-group">
+            <label class="control-label" for="focusedInput">所属网站:</label>
+            <div class="controls">
+                 @SelectHelpers.DropDownList("SiteId", HtmlUtils.GetSiteSelectList(ViewBag.SiteList,Model.SiteId.ToString()), new{ data_rel="chosen"})
+            </div>
+        </div>
+        
+
+        <div class="control-group">
+            <label class="control-label" for="focusedInput">角色名称:</label>
+            <div class="controls">
+                <input class="input-xlarge focused" name="Name" id="Name" type="text" value="@Model.Name">
+            </div>
+        </div>
+
+        <div class="control-group">
+            <label class="control-label" for="focusedInput">角色描述:</label>
+            <div class="controls">
+                <textarea class="autogrow" name="Description" id="Description">@Model.Description</textarea>
+            </div>
+        </div>
+
+        <div class="form-actions">
+            <button type="submit" class="btn btn-primary">保存</button>
+            <a href="/role/list?siteId=@Model.SiteId" class="btn">返回列表</a>
+        </div>
+    </fieldset>
+</form>
