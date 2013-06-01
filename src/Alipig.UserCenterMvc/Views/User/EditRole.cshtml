@@ -1,0 +1,207 @@
+﻿@{
+    Layout = "../content-layout.cshtml";
+}
+@using Alipig.Framework.Web.Html
+@using Alipig.Framework.Util
+<style>
+.sep-line{border-top:solid 1px #aaa; height:1px; margin:10px;}
+.list-holder{margin:0 10px 0 10px;}
+ul { margin:0 10px; padding:0px; }
+#gallery{ width: 280px; list-style-type:none; }
+#gallery li{ float:left; padding:3px 0 3px 0; width: 250px;height:23px;border-radius:2px 2px 2px 2px; background-color:#EEFECB;border:solid 1px #ccc;margin:20px 0 0 0;  }
+#gallery div{ float:left; width: 220px; height:23px; line-height:23px; text-indent:5px; }
+#gallery a
+{ 
+    margin-top:5px;
+    float:left;
+    width: 10%;
+}
+#gallery { float:left; }
+.placeHolder div { background-color:white !important; border:dashed 1px gray !important; }
+.no-roles { padding:3px 0 3px 0; width:90%; height:25px; padding-top:10px; text-indent:20px; }
+
+
+#trash { float: right;  min-height: 18em; padding: 1%; margin-right:10px; }
+#trash h4 { line-height: 16px; margin: 0 0 0.4em; }
+#trash h4 .ui-icon { float: left; }
+#trash .gallery h5 { display: none; }
+</style>
+
+
+@*<div class="row">
+    <div class="form-horizontal span5">
+        <fieldset>
+            <div class="control-group">
+                <label class="control-label">用户名:</label>
+                <div class="controls">
+                    <label class="control-label">@ViewBag.UserName</label>
+                </div>
+            </div>
+            <div class="control-group">
+                <label class="control-label">所在系统：</label>
+                <div class="controls">
+                    @SelectHelpers.DropDownList("siteId", HtmlUtils.GetSiteSelectList(ViewBag.SiteList,ViewBag.SiteId.Value.ToString()), new{ data_rel="chosen",onChange = "doChangeSite();" })
+                </div>
+            </div>
+
+            
+            @if (ViewBag.NoSystemRoles.Value)
+            {
+                <div class="control-group no-roles">
+                    此系统还没有角色，<a href="">马上添加</a>。
+                </div>
+            }
+            else if (ViewBag.SiteId.Value != Guid.Empty)
+            {
+                
+            <div class="control-group">
+                <label class="control-label">角色：</label>
+                <div class="controls">
+                    
+                </div>
+            </div>
+            }
+
+        </fieldset>
+    </div>
+    <div class="row-fluid sortable">
+        <div class="box span3">
+            <div class="box-header well" data-original-title>
+                <h2><i class="icon-th"></i>Grid 3</h2>
+                <div class="box-icon">
+                    <a href="#" class="btn btn-close btn-round"><i class="icon-remove"></i></a>
+                </div>
+            </div>
+            <div class="box-content">
+                <div class="row-fluid">
+                    <div class="span4">
+                        <h6>span 4</h6>
+                    </div>
+                    <div class="span4">
+                        <h6>span 4</h6>
+                    </div>
+                    <div class="span4">
+                        <h6>span 4</h6>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!--/span-->
+    </div>
+
+    </div>*@
+
+<div class="row-fluid">
+	<div class="box span6">
+		<div class="box-header well" data-original-title>
+			<h2><i class="icon-th"></i> 未选角色</h2>
+		</div>
+		<div class="box-content">
+              <div class="form-horizontal">
+                  <fieldset>
+                      <div class="control-group">
+                          <label class="control-label">用户名:</label>
+                          <div class="controls">
+                              <h3>@ViewBag.UserName</h3>
+                          </div>
+                      </div>
+                      <div class="control-group">
+                          <label class="control-label">所在系统：</label>
+                          <div class="controls">
+                              @SelectHelpers.DropDownList("siteId", HtmlUtils.GetSiteSelectList(ViewBag.SiteList, ViewBag.SiteId.Value.ToString()), new { @class="chzn-select", onChange = "doChangeSite();" })
+                          </div>
+                      </div>
+                      @if (ViewBag.NoSystemRoles.Value)
+                      {
+                          <div class="control-group">
+                          <div class="controls">
+                                此系统还没有角色，<a href="">马上添加</a>。
+                              </div>
+                          </div>
+                      }
+                      else if (ViewBag.SiteId.Value != Guid.Empty)
+                      {
+                          
+                      <div class="control-group">
+                          <label class="control-label">角色：</label>
+                          <div class="controls">
+                              @SelectHelpers.DropDownList("roleId", HtmlUtils.GetRoleSelectList(ViewBag.LeftRoles, null), new { @class="chzn-select" })
+                          </div>
+                      </div>
+
+                      <div class="form-actions">
+                          <button type="button" id="addToRight" class="btn btn-primary">添加</button>
+                      </div>
+                      }
+                  </fieldset>
+              </div>           
+      </div>
+	</div><!--/span-->
+	
+    <div class="box span6">
+        <div class="box-header well" data-original-title>
+            <h2><i class="icon-th"></i>已选角色</h2>
+        </div>
+        <div class="box-content" id="rightBox">
+            @foreach (var item in ViewBag.RightRoles.Value)
+            {
+                <div class="alert alert-info" rel="@item.ID">
+                    <button type="button" onclick='doDeleteRightItem("@item.ID","@item.Name")' class="close">×</button>
+                    <strong>@item.Name</strong>
+                </div>
+            }
+        </div>
+    </div>
+    <!--/span-->
+</div><!--/row-->
+
+<div class="form-actions">
+    <button type="button" id="doSubmit" class="btn btn-primary">保存</button>
+    <a href="javascript:parent.$.fn.colorbox.close();" class="btn">取消</a>
+</div>
+
+
+@section JavaScript
+{
+    <script>
+        var userId = '@ViewBag.UserId.Value';
+
+        function doChangeSite() {
+            var siteId = $.trim($('#siteId').val());
+
+            location.href = '/user/editrole?userId=' + userId + '&siteId=' + siteId;
+        }
+
+        function doDeleteRightItem(roleId, roleText) {
+            $("#roleId").append("<option value='" + roleId + "'>" + roleText + "</option>");
+            $("#roleId").trigger("liszt:updated");
+            $('div[rel="' + roleId + '"]').remove();
+        }
+
+        $(document).ready(function () {
+            $("#addToRight").click(function () {
+                var roleId = $.trim($("#roleId").val());
+                var roleText = $("#roleId").find("option:selected").text();
+                if (roleId == "") {
+                    notyu.tip("请选择角色!", "warning");
+                    return;
+                }
+                $("#roleId option[value='" + roleId + "']").remove();
+                $("#roleId").trigger("liszt:updated");
+                //$.uniform.update(checkfun);
+                $("#rightBox").append("<div class='alert alert-info' rel='" + roleId + "'><button type='button' onclick='doDeleteRightItem(\"" + roleId + "\",\"" + roleText + "\")' class='close'>×</button><strong>" + roleText + "</strong></div>");
+            });
+
+            $("#doSubmit").click(function () {
+                var ids = $(".alert").map(function () { return $(this).attr("rel"); }).get();
+                //alert(ids);
+                $.post("/user/saverole", { ids: ids.join(","), userId: userId, SiteId: $.trim($("#siteId").val()) },
+                function (data) {
+                    notyu.tip(data.msg, data.code);
+                }, "json");
+            });
+
+            $(".chzn-select").chosen({ allow_single_deselect: true });
+        });
+    </script>
+}

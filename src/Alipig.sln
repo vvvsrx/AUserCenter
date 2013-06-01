@@ -1,0 +1,49 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 2012
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Alipig.Framework", "Alipig.Framework\Alipig.Framework.csproj", "{455C9BFB-605F-48B9-8F72-7817F35EB82F}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Alipig.Data", "Alipig.Data\Alipig.Data.csproj", "{75B014FA-3A93-47DA-9519-C99DCBAF0D4A}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Wcf", "Wcf", "{5659EC3E-1C74-4097-8192-52A4354427F4}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Alipig.UserCenterMvc", "Alipig.UserCenterMvc\Alipig.UserCenterMvc.csproj", "{2BF7FD52-3405-4518-9149-3F4C5C0B9252}"
+EndProject
+Global
+	GlobalSection(TeamFoundationVersionControl) = preSolution
+		SccNumberOfProjects = 4
+		SccEnterpriseProvider = {4CA58AB2-18FA-4F8D-95D4-32DDF27D184C}
+		SccTeamFoundationServer = http://srx-data:8080/tfs/defaultcollection
+		SccLocalPath0 = .
+		SccProjectUniqueName1 = Alipig.Data\\Alipig.Data.csproj
+		SccProjectName1 = Alipig.Data
+		SccLocalPath1 = Alipig.Data
+		SccProjectUniqueName2 = Alipig.Framework\\Alipig.Framework.csproj
+		SccProjectName2 = Alipig.Framework
+		SccLocalPath2 = Alipig.Framework
+		SccProjectUniqueName3 = Alipig.UserCenterMvc\\Alipig.UserCenterMvc.csproj
+		SccProjectName3 = Alipig.UserCenterMvc
+		SccLocalPath3 = Alipig.UserCenterMvc
+	EndGlobalSection
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{455C9BFB-605F-48B9-8F72-7817F35EB82F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{455C9BFB-605F-48B9-8F72-7817F35EB82F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{455C9BFB-605F-48B9-8F72-7817F35EB82F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{455C9BFB-605F-48B9-8F72-7817F35EB82F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{75B014FA-3A93-47DA-9519-C99DCBAF0D4A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{75B014FA-3A93-47DA-9519-C99DCBAF0D4A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{75B014FA-3A93-47DA-9519-C99DCBAF0D4A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{75B014FA-3A93-47DA-9519-C99DCBAF0D4A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2BF7FD52-3405-4518-9149-3F4C5C0B9252}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2BF7FD52-3405-4518-9149-3F4C5C0B9252}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2BF7FD52-3405-4518-9149-3F4C5C0B9252}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2BF7FD52-3405-4518-9149-3F4C5C0B9252}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal

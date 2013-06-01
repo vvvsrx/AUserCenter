@@ -1,0 +1,150 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{455C9BFB-605F-48B9-8F72-7817F35EB82F}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>Alipig.Framework</RootNamespace>
+    <AssemblyName>Alipig.Framework</AssemblyName>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <SccProjectName>SAK</SccProjectName>
+    <SccLocalPath>SAK</SccLocalPath>
+    <SccAuxPath>SAK</SccAuxPath>
+    <SccProvider>SAK</SccProvider>
+    <TargetFrameworkProfile />
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="FluentNHibernate">
+      <HintPath>..\packages\FluentNHibernate.1.3.0.733\lib\FluentNHibernate.dll</HintPath>
+    </Reference>
+    <Reference Include="FluentValidation">
+      <HintPath>..\packages\FluentValidation.4.0.0.0\lib\Net40\FluentValidation.dll</HintPath>
+    </Reference>
+    <Reference Include="HibernatingRhinos.Profiler.Appender">
+      <HintPath>..\..\..\..\..\bak\NHibernate.Profiler-v2.0-Build-2066(破解版)\NHibernate.Profiler-v2.0-Build-2066(破解版)\HibernatingRhinos.Profiler.Appender.dll</HintPath>
+    </Reference>
+    <Reference Include="HtmlTags">
+      <HintPath>..\packages\HtmlTags.1.2.0.150\lib\4.0\HtmlTags.dll</HintPath>
+    </Reference>
+    <Reference Include="Iesi.Collections">
+      <HintPath>..\packages\Iesi.Collections.3.2.0.4000\lib\Net35\Iesi.Collections.dll</HintPath>
+    </Reference>
+    <Reference Include="Nancy">
+      <HintPath>..\packages\Nancy.0.17.1\lib\net40\Nancy.dll</HintPath>
+    </Reference>
+    <Reference Include="Nancy.ViewEngines.Razor">
+      <HintPath>..\packages\Nancy.Viewengines.Razor.0.17.1\lib\net40\Nancy.ViewEngines.Razor.dll</HintPath>
+    </Reference>
+    <Reference Include="NHibernate">
+      <HintPath>..\packages\NHibernate.3.3.3.4000\lib\Net35\NHibernate.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
+    <Reference Include="System.configuration" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.ServiceModel" />
+    <Reference Include="System.Web" />
+    <Reference Include="System.Web.ApplicationServices" />
+    <Reference Include="System.Web.Razor.Unofficial">
+      <HintPath>..\packages\System.Web.Razor.Unofficial.2.0.2\lib\net40\System.Web.Razor.Unofficial.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Common\EncryptManager.cs" />
+    <Compile Include="Common\HashEncrypt.cs" />
+    <Compile Include="Common\SymmetricEncrypt.cs" />
+    <Compile Include="Disposable.cs" />
+    <Compile Include="Entities\Entity.cs" />
+    <Compile Include="Entities\Enums\Charisma_AlertType.cs" />
+    <Compile Include="Entities\Enums\LoginUserStatuses.cs" />
+    <Compile Include="Entities\Enums\NotyType.cs" />
+    <Compile Include="Entities\Enums\PermissionItemDisplayStyle.cs" />
+    <Compile Include="Entities\Enums\SymmetricEncryptType.cs" />
+    <Compile Include="Entities\Enums\UserAccountStatuses.cs" />
+    <Compile Include="Entities\Enums\UserGender.cs" />
+    <Compile Include="Entities\Enums\UserPasswordFormats.cs" />
+    <Compile Include="Entities\Enums\UserStatus.cs" />
+    <Compile Include="Entities\ExtendedModels\PermissionGroupItemsModel.cs" />
+    <Compile Include="Entities\JsonModel\NotyResult.cs" />
+    <Compile Include="Entities\Mappings\PermissionGroupMap.cs" />
+    <Compile Include="Entities\Mappings\PermissionItemMap.cs" />
+    <Compile Include="Entities\Mappings\RoleMap.cs" />
+    <Compile Include="Entities\Mappings\SiteMap.cs" />
+    <Compile Include="Entities\Mappings\UserMap.cs" />
+    <Compile Include="Entities\Mappings\UserPermissionMap.cs" />
+    <Compile Include="Entities\Mappings\UserRoleMappingMap.cs" />
+    <Compile Include="Entities\PermissionGroup.cs" />
+    <Compile Include="Entities\PermissionItem.cs" />
+    <Compile Include="Entities\Role.cs" />
+    <Compile Include="Entities\Site.cs" />
+    <Compile Include="Entities\User.cs" />
+    <Compile Include="Entities\UserPermission.cs" />
+    <Compile Include="Entities\UserRoleMapping.cs" />
+    <Compile Include="Entities\Validator\PermissionGroupValidator.cs" />
+    <Compile Include="Entities\Validator\PermissionItemValidator.cs" />
+    <Compile Include="Entities\Validator\RoleValidator.cs" />
+    <Compile Include="Entities\Validator\SiteValidator.cs" />
+    <Compile Include="Entities\Validator\UserValidator.cs" />
+    <Compile Include="NHHelper\ConfigurationBuilder.cs" />
+    <Compile Include="NHHelper\HttpSessionStorage.cs" />
+    <Compile Include="NHHelper\IRepository.cs" />
+    <Compile Include="NHHelper\ISessionStorage.cs" />
+    <Compile Include="NHHelper\NHibernateHelper.cs" />
+    <Compile Include="NHHelper\RepositoryNhbImpl.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Util\DirectoryUtil.cs" />
+    <Compile Include="Util\EnumerableExtensions.cs" />
+    <Compile Include="Util\HtmlUtils.cs" />
+    <Compile Include="Util\PasswordUtil.cs" />
+    <Compile Include="Util\RequestResultUtil.cs" />
+    <Compile Include="Web\Html\SelectHelpers.cs" />
+    <Compile Include="Web\Model\SelectListItem.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="app.config" />
+    <None Include="packages.config" />
+    <None Include="web.config" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <PropertyGroup>
+    <PostBuildEvent>
+if $(ConfigurationName) == Debug (
+xcopy /s /y /R "$(SolutionDir)packages\Nancy.Viewengines.Razor.0.17.1\BuildProviders\Nancy.ViewEngines.Razor.BuildProviders.dll" "$(ProjectDir)bin\"
+xcopy /s /y /R "$(SolutionDir)packages\Nancy.Viewengines.Razor.0.17.1\lib\Net40\Nancy.ViewEngines.Razor.dll" "$(ProjectDir)bin\"
+)</PostBuildEvent>
+  </PropertyGroup>
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>
