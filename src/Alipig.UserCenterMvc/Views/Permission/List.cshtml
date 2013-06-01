@@ -1,0 +1,312 @@
+﻿@{
+    Layout = "../razor-layout.cshtml";
+}
+@using Alipig.Framework.Util
+@using Alipig.Framework.Web.Html
+<div>
+    <ul class="breadcrumb">
+        <li>
+            <a href="#">主页</a> <span class="divider">/</span>
+        </li>
+        <li>
+            <a href="#">管理网站</a> <span class="divider">/</span>
+        </li>
+        <li>
+            <a href="#">网站列表</a>
+        </li>
+    </ul>
+</div>
+<div class="row-fluid">
+    <div class="box span12">
+        <div class="box-header well" data-original-title>
+            <h2><i class="icon-eye-open"></i> 所属系统</h2>
+            <div class="box-btn pull-right">
+                <a href="/site/list" class="btn btn-success">返回网站列表</a>
+            </div>
+        </div>
+        <div class="box-content">
+            <form class="form-horizontal">
+                <fieldset>
+                    <div class="control-group">
+                        <div class="span4">
+                            @SelectHelpers.DropDownList("siteId", HtmlUtils.GetSiteSelectList(ViewBag.SiteList,ViewBag.SiteId.Value), new{ data_rel="chosen",onChange = "doChangeSite();" })
+                            @*<select id="selectError" data-rel="chosen">
+						    			<option>Option 1</option>
+						    			<option>Option 2</option>
+						    			<option>Option 3</option>
+						    			<option>Option 4</option>
+						    			<option>Option 5</option>
+						    </select>*@
+                        </div>
+                        <div class="span6">
+                            <a href="javascript:;" onclick="goUrl('/permission/addgroup');" class="btn btn-primary">新增权限分组</a>
+                            <button class="btn btn-primary ordergroup">排序权限分组</button>
+                        </div>
+                    </div>
+                    <div class="well">
+					  个人权限继承说明：
+                      <br />1. <b>单选框</b> 与 <b>树视图</b> 类型，在 <b>角色权限</b>、<b>永久权限</b>、<b>临时权限</b>（有效时期） 中任何已勾选的权限都会一直会继承下去；
+                      <br />2. <b>文本框</b> 与 <b>下拉框</b> 类型，是按 <b>临时权限</b> -〉<b>永久权限</b> -〉<b>角色权限</b>（按排序的顺序） 的顺序，前者的权限为空或没有选择时才会继承后者的权限值
+					</div>  
+                </fieldset>
+            </form>
+
+        </div>
+    </div>
+    <!--/span-->
+
+</div>
+<!--/row-->
+@if (Model != null)
+{
+    foreach (var groupItem in Model)
+    {
+        <div class="row-fluid">
+				<div class="box span12">
+					<div class="box-header well" data-original-title>
+						<h2 id="h-@groupItem.Group.ID"><i class="icon-list-alt"></i>@groupItem.Group.Name</h2>
+                        <div class="box-btn pull-right">
+                            <a href="/permission/additem?permissiongroupid=@groupItem.Group.ID&siteid=@groupItem.Group.SiteId" class="btn btn-success">新增项</a>
+                            <a group-id="group-@groupItem.Group.ID" href="javascript:;" class="btn btn-success deleteItems">删除选中项</a>
+                            <a group-id="@groupItem.Group.ID" href="javascript:;" class="btn btn-success orderitem">编辑项排序</a>
+                            <a group-id="@groupItem.Group.ID" href="javascript:;" class="btn btn-success editGroup">编辑权限分组</a>
+                            <a group-id="@groupItem.Group.ID" href="javascript:;" class="btn btn-success deleteGroup">删除权限分组</a>
+                        </div>
+					</div>
+					<div class="box-content">
+						<table id="group-@groupItem.Group.ID"  class="table">
+							  <thead>
+								  <tr>
+									  <th><input type="checkbox" id="CheckAll" name="CheckAll" class = "parentCheckAll" title = "全选/不选" group-id="group-@groupItem.Group.ID"></th>
+									  <th>代码</th>
+									  <th>名称</th>
+									  <th>显示类型</th>
+									  <th>Json数据地址</th>
+									  <th>操作</th>                                          
+								  </tr>
+							  </thead>   
+							  <tbody>
+                                  @foreach (var item in HtmlUtils.GetOrderedItems(groupItem))
+                                  {
+								    <tr>
+								    	<td><input type="checkbox" name="CheckBox" id="CheckBox" rel="@item.ID" value="true" class = "check-box"></td>
+								    	<td>@item.Code</td>
+								    	<td>@item.DisplayName</td>
+								    	<td class="center">@HtmlUtils.PermissionItemDisplayStyleToText(item.DisplayStyle)</td>
+								    	<td class="center">@item.JsonDataUrl</td>
+								    	<td class="center">
+								    		<button item-id="@item.ID" data-layout="center" data-type="confirm" class="btn btn-mini btn-danger deleteGroupItem"><i class="icon-remove icon-white"></i></button>
+								    	</td>                                       
+								    </tr>
+                                  }
+							  </tbody>
+						 </table>  
+					</div>
+				</div><!--/span-->
+    </div>
+    }
+}
+
+<div class="modal hide fade" id="orderModal">
+	<div class="modal-header">
+		<button type="button" class="close" data-dismiss="modal">×</button>
+		<h3></h3>
+	</div>
+	<div class="modal-body" style="height:500px">
+		<iframe name="ordergroup-iframe" id="ordergroup-iframe" width="100%" height="100%" marginheight="0" marginwidth="0" frameborder="0" scrolling="auto" src="">
+
+		</iframe>
+	</div>
+	<div class="modal-footer">
+	</div>
+</div>
+
+<div class="modal hide fade" id="editGroupModal">
+  <div class="modal-header">
+    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+    <h3>编辑权限组</h3>
+  </div>
+  <div class="modal-body">
+    <fieldset>
+        <input type="hidden" id="groupId" value="" />
+        <div class="control-group">
+            <label class="control-label" for="focusedInput">分组名称:</label>
+            <div class="controls">
+                <input class="input-xlarge focused" name="groupName" id="groupName" type="text" value="">
+            </div>
+        </div>
+    </fieldset>
+  </div>
+  <div class="modal-footer">
+    <a href="#" class="btn" data-dismiss="modal" aria-hidden="true">关闭</a>
+    <a href="javascript:;" class="btn btn-primary" id="btnEditGroup">保存</a>
+  </div>
+</div>
+
+
+
+
+@section JavaScript
+{
+    <script type="text/javascript">
+        var siteId = '@ViewBag.SiteId.Value';
+
+        function goUrl(url) {
+            url += "?siteId=" + siteId;
+            window.location = url;
+        }
+
+        function doChangeSite() {
+            var siteId = $.trim($('#siteId').val());
+
+            var url = '/permission/list';
+            url += '?siteId=' + siteId;
+            //url = $.format(url + '?siteId={0}', $.encode(systemId));
+            window.location = url;
+        }
+
+        
+        $(document).ready(function () {
+            $(".deleteGroupItem").click(
+                function () {
+                    var self = $(this);
+                    var gid = $(this).attr("item-id");
+
+                    notyu.confirm("是否删除?",
+                        function (result) {
+                            if (result) {
+                                $.post("/permission/deleteitem", { id: gid },
+                                function (data) {
+                                    if (data.code != "success") {
+                                        notyu.tip(data.msg, data.code);
+                                    }
+                                    else {
+                                        notyu.tip(data.msg, data.code,
+                                            function () {
+                                                window.location.reload();
+                                            });
+                                    }
+                                }, "json");
+                            }
+                        });
+                    return false;
+                });
+            //deleteGroup
+            
+            $(".deleteGroup").click(
+                function () {
+                    var self = $(this);
+                    var gid = $(this).attr("group-id");
+
+                    notyu.confirm("是否删除?",
+                        function (result) {
+                            if (result) {
+                                $.post("/permission/deletegroup", { id: gid },
+                                function (data) {
+                                    if (data.code != "success") {
+                                        notyu.tip(data.msg, data.code);
+                                    }
+                                    else {
+                                        notyu.tip(data.msg, data.code,
+                                            function () {
+                                                window.location.reload();
+                                            });
+                                    }
+                                }, "json");
+                            }
+                        });
+                    return false;
+                });
+
+
+            $(".deleteItems").click(
+                function () {
+                    var self = $(this);
+                    var groupId = $(this).attr("group-id");
+
+                    var ids = [];
+                    $("#" + groupId + " .check-box").each(function () {
+                        var val = $(this).attr("rel");
+                        if (this.checked) {
+                            ids.push(val);
+                        }
+                    });
+
+                    if (ids.length == 0) {
+                        notyu.tip("请选择至少一个权限项！", "warning");
+                        return;
+                    }
+
+                    notyu.confirm("确定要删除选中的权限项吗？",
+                        function (result) {
+                            if (result) {
+                                $.post("/permission/deleteitem", { id: ids.join(",") },
+                                function (data) {
+                                    if (data.code != "success") {
+                                        notyu.tip(data.msg, data.code);
+                                    }
+                                    else {
+                                        notyu.tip(data.msg, data.code,
+                                            function () {
+                                                window.location.reload();
+                                            });
+                                    }
+                                }, "json");
+                            }
+                        });
+                    return false;
+                });
+
+            $(".ordergroup").click(function (e) {
+                e.preventDefault();
+
+                if (siteId == '') {
+                    notyu.tip("请选择系统！", "warning");
+                    return;
+                }
+                $("#ordergroup-iframe").attr("src", "/permission/viewgrouporder?siteId=" + siteId);
+                $("#orderModal h3").html("编辑排序");
+                $("#orderModal").modal('toggle');
+                });
+
+
+
+            $(".orderitem").click(function (e) {
+                e.preventDefault();
+
+                var gid = $(this).attr("group-id");
+                $("#ordergroup-iframe").attr("src", "/permission/viewitemorder?permissionGroupId=" + gid);
+                $("#orderModal h3").html("编辑排序");
+                $("#orderModal").modal('toggle');
+            });
+
+            $(".editGroup").click(function (e) {
+                e.preventDefault();
+                var groupId = $(this).attr("group-id");
+                var name = $("#h-" + groupId).text();
+                $("#groupName").val(name);
+                $("#groupId").val(groupId);
+
+                $("#editGroupModal").modal('toggle');
+            });
+
+            $("#btnEditGroup").click(function (e) {
+                var groupId = $("#groupId").val();
+                var name = $("#groupName").val();
+                $.post("/permission/editgroup", { id: groupId, name: name },
+                function (data) {
+                    if (data.code != "success") {
+                        notyu.tip(data.msg, data.code);
+                    }
+                    else {
+                        notyu.tip(data.msg, data.code,
+                            function () {
+                                $("#h-" + groupId).text(name);
+                                $("#editGroupModal").modal('toggle');
+                            });
+                    }
+                }, "json");
+            });
+        });
+        </script>
+}
